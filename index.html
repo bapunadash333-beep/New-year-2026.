@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for My Sister 2026! ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Canvas for background effects */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #ffcc00;
+            text-shadow: 0 0 15px #ffcc00, 0 0 30px #ff007f;
+            margin-top: 30px;
+            animation: bounce 2s infinite;
+        }
+
+        /* Countdown Box */
+        #timer-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px solid #ff007f;
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .time-unit { color: #ff007f; display: block; font-size: 1.8rem; }
+
+        /* Slideshow with Neon Border */
+        .photo-frame {
+            width: 100%;
+            height: 450px;
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 5px solid white;
+            box-shadow: 0 0 20px #ff007f, 0 0 40px #ffcc00;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: 1.5s ease-in-out;
+            transform: scale(1.1);
+        }
+
+        .photo-frame img.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .sweet-message {
+            margin-top: 25px;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            background: linear-gradient(90deg, #ffcc00, #ff007f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .btn-music {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #ff007f;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 0, 127, 0.5);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="snowCanvas"></canvas>
+
+    <div class="main-content">
+        <h1 id="headline">Countdown to 2026! 🥂</h1>
+
+        <div id="timer-box">
+            <div><span id="days" class="time-unit">00</span>Days</div>
+            <div><span id="hours" class="time-unit">00</span>Hrs</div>
+            <div><span id="minutes" class="time-unit">00</span>Min</div>
+            <div><span id="seconds" class="time-unit">00</span>Sec</div>
+        </div>
+
+        <div class="photo-frame">
+            <img src="photo1.jpg" class="active">
+            <img src="photo2.jpg">
+            <img src="photo3.jpg">
+            <img src="photo4.jpg">
+            <img src="photo5.jpg">
+        </div>
+
+        <div class="sweet-message">
+            "Meri pyari behna, 2026 tere liye dher saari khushiyan lekar aaye! ❤️"
+        </div>
+
+        <button class="btn-music" onclick="togglePlay()">🎵 Play New Year Music</button>
+        <audio id="myAudio" loop>
+            <source src="music.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        // --- TIMER FOR 2026 ---
+        const countdown = () => {
+            const targetDate = new Date("January 1, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const gap = targetDate - now;
+
+            if (gap <= 0) {
+                document.getElementById('headline').innerHTML = "HAPPY NEW YEAR 2026! 🎆";
+                document.getElementById('timer-box').style.display = 'none';
+                return;
+            }
+
+            const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
+            document.getElementById('days').innerText = Math.floor(gap / day);
+            document.getElementById('hours').innerText = Math.floor((gap % day) / hour);
+            document.getElementById('minutes').innerText = Math.floor((gap % hour) / minute);
+            document.getElementById('seconds').innerText = Math.floor((gap % minute) / second);
+        };
+        setInterval(countdown, 1000);
+
+        // --- SLIDESHOW ---
+        let idx = 0;
+        const images = document.querySelectorAll('.photo-frame img');
+        setInterval(() => {
+            images[idx].classList.remove('active');
+            idx = (idx + 1) % images.length;
+            images[idx].classList.add('active');
+        }, 3500);
+
+        // --- MUSIC ---
+        const audio = document.getElementById("myAudio");
+        function togglePlay() {
+            return audio.paused ? audio.play() : audio.pause();
+        };
+
+        // --- BACKGROUND EFFECT ---
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        for(let i=0; i<100; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 4 + 1,
+                d: Math.random() * 10
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+            ctx.beginPath();
+            for(let i=0; i<100; i++) {
+                let p = particles[i];
+                ctx.moveTo(p.x, p.y);
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
+            }
+            ctx.fill();
+            update();
+        }
+
+        function update() {
+            for(let i=0; i<100; i++) {
+                let p = particles[i];
+                p.y += Math.cos(p.d) + 1 + p.r/2;
+                p.x += Math.sin(p.d) * 2;
+                if(p.x > canvas.width+5 || p.x < -5 || p.y > canvas.height) {
+                    particles[i] = {x: Math.random()*canvas.width, y: -10, r: p.r, d: p.d};
+                }
+            }
+        }
+        setInterval(draw, 33);
+    </script>
+</body>
+</html>
